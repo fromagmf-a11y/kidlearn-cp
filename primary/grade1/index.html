@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petit Pas — CP 🌱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand" onclick="renderDashboard()" style="cursor:pointer">
+    <span class="brand-icon">🌱</span>
+    <span class="brand-name">Petit Pas</span>
+  </div>
+  <div class="topbar-stats" id="topbarStats"></div>
+  <button class="parent-btn" id="parentModeBtn">👩‍👧 Espace parent</button>
+</header>
+
+<main id="app"></main>
+
+<div id="confettiContainer" class="confetti-container"></div>
+<div id="toast" class="toast"></div>
+
+<footer class="footer">
+  <p><strong>Petit Pas</strong> · Prototype pédagogique CP</p>
+  <p class="disclaimer">Les activités ne constituent pas un diagnostic.</p>
+</footer>
+
+<script src="progression.js"></script>
+<script src="parents.js"></script>
+<script src="data/cp-francais.js"></script>
+<script src="data/cp-maths.js"></script>
+<script src="data/cp-autres.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
