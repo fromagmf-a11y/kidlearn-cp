@@ -422,18 +422,84 @@ function chargerProgression() {
 }
 
 function lancerConfettis() {
-    const c = document.getElementById('confettiContainer'); if (!c) return;
+    const c = document.getElementById('confettiContainer');
+    if (!c) return;
+    
+    // 🎊 Confettis visuels
     const cols = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#FFD93D', '#6BCB77'];
     for (let i = 0; i < 30; i++) {
-        const d = document.createElement('div'); d.className = 'confetti';
+        const d = document.createElement('div');
+        d.className = 'confetti';
         d.style.left = Math.random() * 100 + '%';
         d.style.backgroundColor = cols[Math.floor(Math.random() * cols.length)];
         d.style.animationDelay = Math.random() * 0.5 + 's';
         d.style.animationDuration = (Math.random() * 2 + 1) + 's';
-        c.appendChild(d); setTimeout(() => d.remove(), 3000);
+        c.appendChild(d);
+        setTimeout(() => d.remove(), 3000);
     }
+    
+    //  Son d'applaudissements / fanfare
+    jouerSonBravo();
 }
 
+function jouerSonBravo() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        
+        const ctx = new AudioContext();
+        
+        // Fanfare joyeuse : Do, Mi, Sol, Do aigu
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        const duree = 0.15;
+        
+        notes.forEach((freq, index) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            
+            gain.gain.setValueAtTime(0.3, ctx.currentTime + index * duree);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + index * duree + duree);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.start(ctx.currentTime + index * duree);
+            osc.stop(ctx.currentTime + index * duree + duree);
+        });
+        
+        // Applaudissements (bruit blanc court)
+        setTimeout(() => {
+            const bufferSize = ctx.sampleRate * 0.5;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
+            }
+            
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+            
+            const noiseGain = ctx.createGain();
+            noiseGain.gain.value = 0.2;
+            
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 1000;
+            
+            noise.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(ctx.destination);
+            noise.start();
+        }, 600);
+        
+    } catch (e) {
+        console.log('Son non disponible:', e);
+    }
+}
 function afficherToast(msg, type) {
     const t = document.getElementById('toast'); if (!t) return;
     t.textContent = msg; t.className = `toast toast-${type} visible`;
