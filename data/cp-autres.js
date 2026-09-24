@@ -1,7 +1,7 @@
 // ===== KIDLEARN CP - DÉCOUVERTE DU MONDE =====
 // Copyright (c) 2026 KidLearn. Tous droits réservés.
 
-const DATA_AUTRES = {
+var DATA_AUTRES = {
     modules: [
         {
             id: 'autres-saisons',
