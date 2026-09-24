@@ -1,7 +1,7 @@
 // ===== KIDLEARN CP - DONNÉES FRANÇAIS =====
 // Copyright (c) 2026 KidLearn. Tous droits réservés.
 
-const DATA_FRANCAIS = {
+var DATA_FRANCAIS = {
     modules: [
         {
             id: 'fr-voyelles',
