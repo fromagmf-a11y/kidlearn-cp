@@ -1,7 +1,7 @@
 // ===== KIDLEARN CP - DONNÉES MATHS =====
 // Copyright (c) 2026 KidLearn. Tous droits réservés.
 
-const DATA_MATHS = {
+var DATA_MATHS = {
     modules: [
         {
             id: 'math-nombres10',
